@@ -3,15 +3,14 @@
 	"id": "hardcore-capitalism",
 	"version": "${version}",
 	"name": "Hardcore Capitalism",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Numismatic Overhaul addon: only the rich may respawn!",
 	"authors": [
-		"Me!"
+		"wdfeer"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/wdfeer/hardcore-capitalism"
 	},
-	"license": "CC0-1.0",
+	"license": "GPL-3.0",
 	"icon": "assets/hardcore-capitalism/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -30,9 +29,7 @@
 		"minecraft": "~1.20.1",
 		"java": ">=17",
 		"fabric-api": "*",
-		"fabric-language-kotlin": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
+		"fabric-language-kotlin": "*",
+		"numismaticoverhaul": "*"
 	}
 }
