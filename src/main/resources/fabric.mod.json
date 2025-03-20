@@ -30,6 +30,6 @@
 		"java": ">=17",
 		"fabric-api": "*",
 		"fabric-language-kotlin": "*",
-		"numismaticoverhaul": "*"
+		"numismatic-overhaul": "~0.2.12"
 	}
 }
