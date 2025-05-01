@@ -13,7 +13,7 @@ fun registerOnDeathEvent() {
         subtractMoney(server, playerName)
 
         if (getMoney(server, playerName) < 0) {
-            // TODO: ban
+            CommandHelper.run(server, "ban $playerName \"Try being less poor next time!\"")
         }
     }
 }
@@ -25,5 +25,5 @@ private fun subtractMoney(server: MinecraftServer, playerName: String) {
 private fun getMoney(server: MinecraftServer, playerName: String): Int {
     val command = "numismatic balance $playerName get"
     val string = CommandHelper.run(server, command)!!
-    return string.takeLastWhile { it.isDigit() }.toInt()
+    return string.takeLastWhile { it != ' ' }.toInt()
 }
