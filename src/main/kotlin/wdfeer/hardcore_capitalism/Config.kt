@@ -20,5 +20,8 @@ fun loadConfig(): Config? {
 }
 
 fun saveConfig(config: Config) {
-    // TODO save config to config directory
+    val str = "moneyTaken = ${config.moneyTaken}"
+
+    val path = FabricLoader.getInstance().configDir + MOD_ID
+    File(path.toString()).writeText(str)
 }
