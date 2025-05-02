@@ -7,7 +7,10 @@ object HardcoreCapitalism : ModInitializer {
     private val logger = LoggerFactory.getLogger("hardcore-capitalism")
 
 	override fun onInitialize() {
-		registerOnDeathEvent()
+		val config = loadConfig() ?: defaultConfig.also { saveConfig(it) }
+
+		registerOnDeathEvent(config)
+
 		logger.info("Hardcore Capitalism loaded!")
 	}
 }
