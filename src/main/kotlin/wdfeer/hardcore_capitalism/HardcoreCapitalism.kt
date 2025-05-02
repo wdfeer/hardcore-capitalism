@@ -8,7 +8,17 @@ object HardcoreCapitalism : ModInitializer {
     private val logger = LoggerFactory.getLogger(MOD_ID)
 
 	override fun onInitialize() {
-		val config = loadConfig() ?: defaultConfig.also { saveConfig(it) }
+		val config: Config = run {
+			val loaded = loadConfig()
+			if (loaded == null) {
+				logger.error("Failed to load config! Creating a new default config.")
+				saveConfig(defaultConfig)
+				defaultConfig
+			} else {
+				logger.debug("Hardcore Capitalism config loaded successfully!")
+				loaded
+			}
+		}
 
 		registerOnDeathEvent(config)
 

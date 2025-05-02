@@ -10,7 +10,7 @@ fun registerOnDeathEvent(config: Config) {
 
         subtractMoney(server, playerName, config.moneyTaken)
 
-        if (getMoney(server, playerName) < 0) {
+        if (getMoney(server, playerName) < config.banThreshold) {
             CommandHelper.run(server, "ban $playerName \"Try being less poor next time!\"")
         }
     }
