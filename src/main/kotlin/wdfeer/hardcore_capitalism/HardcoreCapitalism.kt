@@ -4,7 +4,8 @@ import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
 
 object HardcoreCapitalism : ModInitializer {
-    private val logger = LoggerFactory.getLogger("hardcore-capitalism")
+	const val MOD_ID = "hardcore-capitalism"
+    private val logger = LoggerFactory.getLogger(MOD_ID)
 
 	override fun onInitialize() {
 		val config = loadConfig() ?: defaultConfig.also { saveConfig(it) }
