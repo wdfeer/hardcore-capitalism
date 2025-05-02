@@ -8,9 +8,16 @@ val defaultConfig: Config = Config(500)
 
 data class Config(val moneyTaken: Int)
 
+private fun getConfigFile(): File {
+    val path = FabricLoader.getInstance().configDir.resolve(MOD_ID)
+    return path.toFile()
+}
+
 fun loadConfig(): Config? {
-    val path = FabricLoader.getInstance().configDir + MOD_ID
-    val lines = File(path.toString()).readLines()
+    val file = getConfigFile()
+    if (!file.exists()) return null
+
+    val lines = file.readLines()
     val map = lines.associate { line ->
         line.takeWhile { it != '=' }.trim() to line.takeLastWhile { it != '=' }.trim()
     }
@@ -22,6 +29,14 @@ fun loadConfig(): Config? {
 fun saveConfig(config: Config) {
     val str = "moneyTaken = ${config.moneyTaken}"
 
-    val path = FabricLoader.getInstance().configDir + MOD_ID
-    File(path.toString()).writeText(str)
+    val file = getConfigFile()
+
+    if (!file.exists())
+        file.createNewFile()
+    else {
+        file.delete()
+        file.createNewFile()
+    }
+
+    file.writeText(str)
 }
