@@ -9,7 +9,7 @@ val defaultConfig: Config = Config(500, 0)
 data class Config(val moneyTaken: Int, val banThreshold: Int)
 
 private fun getConfigFile(): File {
-    val path = FabricLoader.getInstance().configDir.resolve(MOD_ID)
+    val path = FabricLoader.getInstance().configDir.resolve("$MOD_ID.cfg")
     return path.toFile()
 }
 
