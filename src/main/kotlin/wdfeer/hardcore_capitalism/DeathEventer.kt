@@ -10,18 +10,25 @@ fun registerOnDeathEvent(config: Config) {
 
         subtractMoney(server, playerName, config.moneyTaken)
 
-        if (getMoney(server, playerName) < config.banThreshold) {
+        val balance = getMoney(server, playerName)
+        if (balance != null && balance < config.banThreshold) {
             CommandHelper.run(server, "ban $playerName \"Try being less poor next time!\"")
+                ?: HardcoreCapitalism.logger.error("Failed banning $playerName")
         }
     }
 }
 
 private fun subtractMoney(server: MinecraftServer, playerName: String, amount: Int) {
     CommandHelper.run(server, "numismatic balance $playerName subtract $amount")
+        ?: HardcoreCapitalism.logger.error("Failed to subtract $amount bronze from $playerName")
 }
 
-private fun getMoney(server: MinecraftServer, playerName: String): Int {
+private fun getMoney(server: MinecraftServer, playerName: String): Int? {
     val command = "numismatic balance $playerName get"
-    val string = CommandHelper.run(server, command)!!
-    return string.takeLastWhile { it != ' ' }.toInt()
+    val string = CommandHelper.run(server, command)
+    return if (string == null) {
+        HardcoreCapitalism.logger.error("Failed to inquire $playerName's balance through \"$command\"")
+        null
+    } else
+        string.takeLastWhile { it != ' ' }.toInt()
 }

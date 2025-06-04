@@ -33,7 +33,6 @@ fun saveConfig(config: Config) {
 banThreshold = ${config.banThreshold}
 """
 
-
     val file = getConfigFile()
 
     if (!file.exists())
