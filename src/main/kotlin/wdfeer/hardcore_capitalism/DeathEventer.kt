@@ -1,16 +1,17 @@
 package wdfeer.hardcore_capitalism
 
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
 
 fun registerOnDeathEvent(config: Config) {
-    ServerPlayerEvents.AFTER_RESPAWN.register { _, newPlayer, _ ->
-        execute(config, newPlayer)
+    ServerLivingEntityEvents.AFTER_DEATH.register { entity, source ->
+        if (entity is ServerPlayerEntity)
+            onDeath(config, entity)
     }
 }
 
-private fun execute(config: Config, player: ServerPlayerEntity) {
+private fun onDeath(config: Config, player: ServerPlayerEntity) {
     val server = player.server
     val playerName = player.entityName
 
