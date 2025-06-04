@@ -3,7 +3,7 @@
 	"id": "hardcore-capitalism",
 	"version": "${version}",
 	"name": "Hardcore Capitalism",
-	"description": "Numismatic Overhaul addon: lose money on respawn",
+	"description": "Numismatic Overhaul addon: lose money on death",
 	"authors": [
 		"wdfeer"
 	],
