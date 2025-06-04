@@ -2,19 +2,24 @@ package wdfeer.hardcore_capitalism
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.network.ServerPlayerEntity
 
 fun registerOnDeathEvent(config: Config) {
     ServerPlayerEvents.AFTER_RESPAWN.register { _, newPlayer, _ ->
-        val server = newPlayer.server
-        val playerName = newPlayer.entityName
+        execute(config, newPlayer)
+    }
+}
 
-        subtractMoney(server, playerName, config.moneyTaken)
+private fun execute(config: Config, player: ServerPlayerEntity) {
+    val server = player.server
+    val playerName = player.entityName
 
-        val balance = getMoney(server, playerName)
-        if (balance != null && balance < config.banThreshold) {
-            CommandHelper.run(server, "ban $playerName \"Try being less poor next time!\"")
-                ?: HardcoreCapitalism.logger.error("Failed banning $playerName")
-        }
+    subtractMoney(server, playerName, config.moneyTaken)
+
+    val balance = getMoney(server, playerName)
+    if (balance != null && balance < config.banThreshold) {
+        CommandHelper.run(server, "ban $playerName \"Try being less poor next time!\"")
+            ?: HardcoreCapitalism.logger.error("Failed banning $playerName")
     }
 }
 
