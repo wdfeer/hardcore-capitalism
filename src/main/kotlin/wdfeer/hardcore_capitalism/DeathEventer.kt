@@ -3,6 +3,8 @@ package wdfeer.hardcore_capitalism
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.text.Text
+import net.minecraft.world.GameMode
 
 fun registerOnDeathEvent(config: Config) {
     ServerLivingEntityEvents.AFTER_DEATH.register { entity, source ->
@@ -19,8 +21,13 @@ private fun onDeath(config: Config, player: ServerPlayerEntity) {
 
     val balance = getMoney(server, playerName)
     if (balance != null && balance < config.banThreshold) {
-        CommandHelper.run(server, "ban $playerName \"Try being less poor next time!\"")
-            ?: HardcoreCapitalism.logger.error("Failed banning $playerName")
+        if (server.isDedicated) {
+            CommandHelper.run(server, "ban $playerName \"Try being less poor next time!\"")
+                ?: HardcoreCapitalism.logger.error("Failed banning $playerName")
+        } else {
+            player.changeGameMode(GameMode.SPECTATOR)
+            player.sendMessageToClient(Text.of("Try being less poor next time!"), true)
+        }
     }
 }
 
